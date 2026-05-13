@@ -1,0 +1,140 @@
+[
+  {
+    "name": "아이시스",
+    "price": 800,
+    "stock": 5,
+    "image_path": ""
+  },
+  {
+    "name": "핫식스 더킹 애플홀릭",
+    "price": 2000,
+    "stock": 3,
+    "image_path": ""
+  },
+  {
+    "name": "레몬워터",
+    "price": 1800,
+    "stock": 7,
+    "image_path": ""
+  },
+  {
+    "name": "옥수수수염차",
+    "price": 1600,
+    "stock": 4,
+    "image_path": ""
+  },
+  {
+    "name": "조지아 커피",
+    "price": 1400,
+    "stock": 6,
+    "image_path": ""
+  },
+  {
+    "name": "트레비라임맛",
+    "price": 1300,
+    "stock": 10,
+    "image_path": ""
+  },
+  {
+    "name": "펩시콜라 제로슈가",
+    "price": 1100,
+    "stock": 5,
+    "image_path": ""
+  },
+  {
+    "name": "펩시콜라",
+    "price": 1100,
+    "stock": 8,
+    "image_path": ""
+  },
+  {
+    "name": "롯데 칠성사이다 제로슈가",
+    "price": 1300,
+    "stock": 6,
+    "image_path": ""
+  },
+  {
+    "name": "롯데 칠성사이다",
+    "price": 1300,
+    "stock": 4,
+    "image_path": ""
+  },
+  {
+    "name": "델몬트 망고 로어슈거",
+    "price": 1200,
+    "stock": 5,
+    "image_path": ""
+  },
+  {
+    "name": "립톤 제로 복숭아",
+    "price": 1200,
+    "stock": 3,
+    "image_path": ""
+  },
+  {
+    "name": "델몬트 스퀴즈 애플 에이드",
+    "price": 1100,
+    "stock": 9,
+    "image_path": ""
+  },
+  {
+    "name": "델몬트 스퀴즈 포도 에이드",
+    "price": 1100,
+    "stock": 5,
+    "image_path": ""
+  },
+  {
+    "name": "롯데 비타파워",
+    "price": 900,
+    "stock": 4,
+    "image_path": ""
+  },
+  {
+    "name": "레쓰비",
+    "price": 900,
+    "stock": 6,
+    "image_path": ""
+  },
+  {
+    "name": "핫식스 제로",
+    "price": 1300,
+    "stock": 5,
+    "image_path": ""
+  },
+  {
+    "name": "밀키스",
+    "price": 1100,
+    "stock": 7,
+    "image_path": ""
+  },
+  {
+    "name": "핫식스",
+    "price": 1300,
+    "stock": 5,
+    "image_path": ""
+  },
+  {
+    "name": "레쓰비 카페타임 라떼",
+    "price": 1200,
+    "stock": 8,
+    "image_path": ""
+  },
+  {
+    "name": "게토레이",
+    "price": 1000,
+    "stock": 8,
+    "image_path": ""
+  },
+  {
+    "name": "코코포도",
+    "price": 1000,
+    "stock": 8,
+    "image_path": ""
+  },
+  {
+    "name": "잔치집 식혜",
+    "price": 1000,
+    "stock": 8,
+    "image_path": ""
+  }
+]

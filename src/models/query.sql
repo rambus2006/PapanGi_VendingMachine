@@ -1,0 +1,2 @@
+CREATE DATABASE vending_machineDB;
+SHOW DATABASES;
