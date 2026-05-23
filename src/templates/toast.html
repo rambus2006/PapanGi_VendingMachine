@@ -1,0 +1,142 @@
+/**
+ * Toast API — 미니멀 스타일 (타입별 아이콘, 상단 가운데)
+ *
+ * 사용법:
+ *   Toast.success("저장됐어요");
+ *   Toast.error("오류가 발생했어요");
+ *   Toast.warning("잔액이 부족해요");
+ *   Toast.info("안내 메시지");
+ *
+ *   Toast.show({ type, title, message, duration });
+ *   Toast.config({ duration: 4000 });
+ */
+
+(function (global) {
+  "use strict";
+
+  const DEFAULTS = {
+    duration: 3000,   // ms, 0 = 자동 닫힘 없음
+    position: "top-center",
+    maxStack: 5,
+  };
+
+  const TYPE_CFG = {
+    success: { label: "success", color: "#16a34a", bg: "#f0fdf4", border: "#86efac", svg: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5 8l2.5 2.5L11 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' },
+    error:   { label: "error",   color: "#dc2626", bg: "#fff5f5", border: "#fca5a5", svg: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>' },
+    warning: { label: "warning", color: "#d97706", bg: "#fffbeb", border: "#fcd34d", svg: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L14.5 13.5H1.5L8 2z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8 6.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r="0.75" fill="currentColor"/></svg>' },
+    info:    { label: "info",    color: "#2563eb", bg: "#eff6ff", border: "#93c5fd", svg: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5" r="0.75" fill="currentColor"/></svg>' },
+  };
+
+  /* CSS 주입 (최초 1회) */
+  function injectStyles() {
+    if (document.getElementById("__toast-styles__")) return;
+    const s = document.createElement("style");
+    s.id = "__toast-styles__";
+    s.textContent = `
+      #__toast-root__ {
+        position: fixed;
+        top: 1.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        pointer-events: none;
+      }
+      .t-item {
+        pointer-events: all;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: 1px solid;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 13.5px;
+        line-height: 1.4;
+        white-space: nowrap;
+        max-width: 420px;
+        white-space: normal;
+        animation: tIn .22s ease forwards;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      }
+      .t-item.hiding {
+        animation: tOut .18s ease forwards;
+      }
+      @keyframes tIn  { from { opacity:0; transform:translateY(-8px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
+      @keyframes tOut { from { opacity:1; transform:translateY(0) scale(1); } to { opacity:0; transform:translateY(-6px) scale(.97); } }
+      .t-icon { flex-shrink: 0; display: flex; }
+      .t-msg  { flex: 1; }
+      .t-title { font-weight: 500; }
+      .t-sub   { font-size: 12px; opacity: .75; margin-top: 1px; }
+    `;
+    document.head.appendChild(s);
+  }
+
+  function getRoot() {
+    let el = document.getElementById("__toast-root__");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "__toast-root__";
+      document.body.appendChild(el);
+    }
+    return el;
+  }
+
+  function dismiss(el) {
+    if (!el || el.classList.contains("hiding")) return;
+    el.classList.add("hiding");
+    el.addEventListener("animationend", () => el.remove(), { once: true });
+  }
+
+  function show(opts) {
+    injectStyles();
+    const o = Object.assign({}, DEFAULTS, typeof opts === "string" ? { message: opts } : opts);
+    const cfg = TYPE_CFG[o.type] || TYPE_CFG.info;
+    const root = getRoot();
+
+    // maxStack 초과 시 제거
+    while (root.children.length >= (o.maxStack || DEFAULTS.maxStack)) {
+      dismiss(root.children[0]);
+    }
+
+    const el = document.createElement("div");
+    el.className = "t-item";
+    el.setAttribute("role", "status");
+    el.setAttribute("aria-live", "polite");
+    el.style.cssText = `background:${cfg.bg}; border-color:${cfg.border}; color:${cfg.color};`;
+
+    const title = o.title || "";
+    const msg   = o.message || "";
+
+    el.innerHTML = `
+      <span class="t-icon">${cfg.svg}</span>
+      <span class="t-msg">
+        ${title ? `<div class="t-title">${title}</div>` : ""}
+        ${msg   ? `<div class="t-sub" style="${!title ? "font-size:13.5px;opacity:1" : ""}">${msg}</div>` : ""}
+      </span>
+    `;
+
+    root.appendChild(el);
+
+    const dur = o.duration !== undefined ? o.duration : DEFAULTS.duration;
+    if (dur > 0) setTimeout(() => dismiss(el), dur);
+
+    return { dismiss: () => dismiss(el) };
+  }
+
+  const Toast = {
+    show,
+    success: (msg, opts) => show(Object.assign({ type: "success", message: msg }, opts)),
+    error:   (msg, opts) => show(Object.assign({ type: "error",   message: msg }, opts)),
+    warning: (msg, opts) => show(Object.assign({ type: "warning", message: msg }, opts)),
+    info:    (msg, opts) => show(Object.assign({ type: "info",    message: msg }, opts)),
+    config:  (opts) => Object.assign(DEFAULTS, opts),
+  };
+
+  if (typeof module !== "undefined" && module.exports) module.exports = Toast;
+  else global.Toast = Toast;
+
+})(typeof window !== "undefined" ? window : this);
