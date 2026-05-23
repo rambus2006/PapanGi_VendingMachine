@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>자판기</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="static/css/style.css" />
+  </head>
+  <body>
+    <div class="machine">
+      <div class="top-bar">
+        <div class="machine-title">🥤 음료 자판기</div>
+        <div class="temp-badge">❄ 냉장 / 온장 ☕</div>
+      </div>
+
+      <div class="display-window">
+        <div class="shelf-light"></div>
+        <div class="shelf">
+          <div class="shelf-items" id="shelf1"></div>
+          <div class="price-row" id="price1"></div>
+        </div>
+        <div class="shelf-light"></div>
+        <div class="shelf">
+          <div class="shelf-items" id="shelf2"></div>
+          <div class="price-row" id="price2"></div>
+        </div>
+        <div class="shelf-light"></div>
+        <div class="shelf">
+          <div class="shelf-items" id="shelf3"></div>
+          <div class="price-row" id="price3"></div>
+        </div>
+        <div class="shelf-light"></div>
+      </div>
+
+      <div class="bottom-panel">
+        <!-- 왼쪽 -->
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div class="ad-board">
+            <div class="ad-brand">LOTTE</div>
+            <div class="ad-name">칠성<span>사이다</span></div>
+            <div class="ad-sub">CHILSUNG CIDER ★ 1979</div>
+          </div>
+          <div class="dispense-area">
+            <div class="dispense-label">DISPENSE · 취출구</div>
+            <div class="dispense-tray" id="dispenseTray">
+              <div class="dispense-inner empty" id="dispenseContent">
+                꺼내는 곳
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 오른쪽 조작부 -->
+        <div class="control-panel">
+          <div class="lcd">
+            <div class="lcd-row1">투입금액</div>
+            <div class="lcd-amount" id="lcd-amount">₩ 0</div>
+            <div class="lcd-status" id="lcd-status">동전을 넣어주세요</div>
+          </div>
+
+          <div class="coin-slot-area" id="coinSlotArea">
+            <div class="slot-label">동전 투입</div>
+            <div class="coin-slot-visual" id="coinSlotVisual">
+              <div class="coin-slot-hole"></div>
+            </div>
+            <div class="coin-btns">
+              <div class="coin-btn" onclick="insertCoin(100)">100</div>
+              <div class="coin-btn" onclick="insertCoin(500)">500</div>
+              <div class="coin-btn" onclick="insertCoin(1000)">1,000</div>
+            </div>
+          </div>
+
+          <div class="action-btns">
+            <button class="btn-buy" id="btn-buy" onclick="buyDrink()">
+              구 매
+            </button>
+            <button class="btn-cancel" onclick="cancelInsert()">
+              반환 / 취소
+            </button>
+          </div>
+
+          <div class="change-tray">
+            <div class="change-slot"></div>
+            <div class="change-label">거스름돈</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pickup-area">
+        <div class="pickup-door"><span>음료 출구</span></div>
+      </div>
+    </div>
+
+    <div class="machine-feet">
+      <div class="foot"></div>
+      <div class="foot"></div>
+    </div>
+
+    <script src="static/js/main.js"></script>
+    <script src="static/js/toast.js"></script>
+  </body>
+</html>

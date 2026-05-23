@@ -240,3 +240,42 @@ vending_machine_project/
 ## 4-2. 깃 도구 사용 
 - gitlens
 - github 
+
+
+
+---
+# 실행 명령어 
+```
+특정 DB 바로 접속:
+
+mysql -u root -p vending_machineDB
+
+들어가서 자주 쓰는 명령어:
+
+SHOW DATABASES;   -- DB 목록
+USE vending_machineDB; -- DB 선택
+SHOW TABLES;      -- 테이블 목록
+EXIT;             -- 종료
+FastAPI 실행
+
+프로젝트 폴더에서:
+uvicorn main:app --reload
+```
+# 해야할 일
+
+> 해야할 일 (미완 )
+- 보고서 작성 
+- git으로 작업 내용 공유 
+- 음료 사진 - 포기해도 됨
+- 칠성 사이다에는 사진 넣기 
+- 파일 구조 정리 
+
+
+> 해결됨 
+- 토스트 창 만들기 -> 해결 
+- 자판기 라우터 오류 -> 해결 
+- 자판기 css 파일 통일-> 해결
+- swagger 문서 작성 -> 해결(8000/docs 치면 나옴 )
+- 카드 부분 삭제 및 자판기 ui 수정 -> 해결 
+
+> 문제 발생 
