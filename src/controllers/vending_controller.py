@@ -1,24 +1,48 @@
 # controllers/vending_controller.py
 
-from models.drink_model import get_drink_by_id, decrease_stock
+from models.drink_model import (
+    get_all_drinks,
+    get_drink_by_id,
+    decrease_stock
+)
 
 
-def purchase_drink(drink_id, money):
-    """
-    음료 구매 로직 (핵심 컨트롤러)
-    """
+# 전체 음료 조회
+def get_drinks():
+    return get_all_drinks()
 
-    # 1. 음료 조회
+
+# 특정 음료 조회
+def get_drink(drink_id):
+
     drink = get_drink_by_id(drink_id)
 
     if not drink:
-        return {"success": False, "message": "음료 없음"}
+        return {
+            "success": False,
+            "message": "음료 없음"
+        }
 
-    # 2. 품절 체크
+    return drink
+
+
+# 기존 구매 로직 유지
+def purchase_drink(drink_id, money):
+
+    drink = get_drink_by_id(drink_id)
+
+    if not drink:
+        return {
+            "success": False,
+            "message": "음료 없음"
+        }
+
     if drink["stock"] <= 0:
-        return {"success": False, "message": "품절"}
+        return {
+            "success": False,
+            "message": "품절"
+        }
 
-    # 3. 금액 체크
     if money < drink["price"]:
         return {
             "success": False,
@@ -26,10 +50,8 @@ def purchase_drink(drink_id, money):
             "need_more": drink["price"] - money
         }
 
-    # 4. 재고 감소
     decrease_stock(drink_id)
 
-    # 5. 거스름돈 계산
     change = money - drink["price"]
 
     return {
